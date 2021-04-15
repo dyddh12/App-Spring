@@ -24,22 +24,33 @@ import core.PostResponseAsyncTask;
  * List객체(Json데이터바인딩)-어댑터클래스(데이터와 뷰객체중간)-리사이클러뷰
  */
 public class SubActivity extends AppCompatActivity {
-    //리사이클러 뷰를 사용할 멤버변수(필드변수) 생성
+    //리사이클러 뷰를 사용할 멤버변수(필드변수) 생성 2개
     private RecyclerAdapter mRecyclerAdapter;
+    private RecyclerAdapter mRecyclerAdapter2;
     private List mItemList = new ArrayList<MemberVO>();
+    //리사이클러 레이아웃 뷰 멤버변수 생성
+    RecyclerView recyclerView;
+    RecyclerView recyclerView2;
     //어댑터에서 선택한 값 확인 변수(선택한 회원을 삭제하기 위해서)
     private String currentCursorId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub);
-        //객체 생성
+        //객체 생성 2개
         mRecyclerAdapter = new RecyclerAdapter(mItemList);
+        mRecyclerAdapter2 = new RecyclerAdapter(mItemList);
         //리사이클러뷰xml과 어댑터클래스를 바인딩
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);//리사이클러 뷰의 높이를 고정.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mRecyclerAdapter);//데이터없는 빈 어댑터를 뷰화면에 바인딩시킴
+        //리사이클러뷰xml2와 어댑터클래스 바인딩
+        recyclerView2 = findViewById(R.id.recyclerView2);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView2.setAdapter(mRecyclerAdapter);
+
         getAllData();
         mRecyclerAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
