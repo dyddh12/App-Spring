@@ -1,6 +1,7 @@
 package com.human.edu;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -49,9 +50,10 @@ public class SubActivity extends AppCompatActivity {
         recyclerView2 = findViewById(R.id.recyclerView2);
         recyclerView2.setHasFixedSize(true);
         recyclerView2.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView2.setAdapter(mRecyclerAdapter);
+        recyclerView2.setAdapter(mRecyclerAdapter2);
 
-        getAllData();
+        getAllData();//1개의 메서드로 2개의 어댑터를 갱신합니다.
+        //선택한 회원 삭제하기
         mRecyclerAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -59,6 +61,23 @@ public class SubActivity extends AppCompatActivity {
                 currentCursorId = memberVO.getUser_id();
                 //Toast.makeText(getApplicationContext(),"현재선택한 회원ID는 "+currentCursorId, Toast.LENGTH_LONG).show();
                 deleteUserData(position, currentCursorId);
+            }
+        });
+        //선택한 회원 메일 보내기
+        mRecyclerAdapter2.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                MemberVO memberVO = (MemberVO) mItemList.get(position);
+                String userEmail = memberVO.getEmail();
+                String userName = memberVO.getUser_name();
+                Intent mailIntent = new Intent(Intent.ACTION_SEND);
+                mailIntent.setType("plain/text");
+                String[] address = {userEmail};
+                //put은 해시데이터(key,value)에 값을 입력할때 사용
+                mailIntent.putExtra(Intent.EXTRA_EMAIL, address);
+                mailIntent.putExtra(Intent.EXTRA_SUBJECT, "[사이트 공지사항]");
+                mailIntent.putExtra(Intent.EXTRA_TEXT, userName+ "님 안녕하세요!");
+                startActivity(mailIntent);//스마트폰의 메일앱을 띄웁니다.
             }
         });
     }
@@ -127,6 +146,7 @@ public class SubActivity extends AppCompatActivity {
                 mItemList.clear();
                 mItemList.addAll(resultList);
                 mRecyclerAdapter.notifyDataSetChanged();//어댑터 객체가 리프레시 됨.
+                mRecyclerAdapter2.notifyDataSetChanged();//데이터변경사항을 공지.
             }
         });
         readTask.execute(requestUrl);//비동기 통신 시작명령.
