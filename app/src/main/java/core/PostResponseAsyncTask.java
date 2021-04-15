@@ -118,6 +118,7 @@ public class PostResponseAsyncTask extends AsyncTask<String, Void, String> {
                 while ((line = br.readLine()) != null) {
                     response += line;//누적변수
                 }
+                Log.i("PostResponseAsyncTask", responseCode + "");
             }else{
                 Log.i("PostResponseAsyncTask", responseCode + "");
                 response = String.valueOf(responseCode);
