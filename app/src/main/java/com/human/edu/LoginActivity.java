@@ -71,14 +71,19 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void processFinish(String output) {//output는 스프링앱에서 전송받은 로그인 사용자 정보
                         Toast.makeText(LoginActivity.this, output+"디버그", Toast.LENGTH_SHORT).show();
-                        String jsonString = output.substring(output.indexOf('{'),output.indexOf('}'));
-                        if(!jsonString.equals("{}")) { //로그인 사용자 정보가 있으면
-                           Log.i("디버그", jsonString);
-                           //로그인 이후 액티비티를 여기서 띄우기
-                            Intent intent = new Intent(LoginActivity.this, SubActivity.class);
-                            startActivity(intent);
+                        String jsonString="";
+                        if(!output.equals("")) {
+                            jsonString = output.substring(output.indexOf('{'), output.indexOf('}'));
+                            if (!jsonString.equals("{}")) { //로그인 사용자 정보가 있으면
+                                Log.i("디버그", jsonString);
+                                //로그인 이후 액티비티를 여기서 띄우기
+                                Intent intent = new Intent(LoginActivity.this, SubActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_LONG).show();
+                            }
                         }else{
-                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "RestApi서버가 작동하지 않습니다.",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
