@@ -92,7 +92,7 @@ public class SubActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //RestAPI 삭체 호출 Call 비동기 통신 시작
-                String requestUrl = "http://192.168.100.18:8080/android/delete/" + currentCursorId;
+                String requestUrl = "http://172.30.1.11:8080/android/delete/" + currentCursorId;
                 PostResponseAsyncTask deleteTask = new PostResponseAsyncTask(SubActivity.this, new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
@@ -124,7 +124,7 @@ public class SubActivity extends AppCompatActivity {
     //RestAPI 서버에서 전송받은 데이터를 리사이클러뷰 어댑터에 바인딩 시킴
     private void getAllData() {
         //RestAPI 서버와 비동기 통신 시작
-        String requestUrl = "http://192.168.100.18:8080/android/list";
+        String requestUrl = "http://172.30.1.11:8080/android/list";
         HashMap postDataParams = new HashMap();
         postDataParams.put("mobile","android");
         List resultList = new ArrayList<>();//RestAPI에서 보내온 jSon데이터가 저장공간 생성

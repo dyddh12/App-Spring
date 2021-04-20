@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 postDataParams.put("txtUsername",editTextID.getText().toString());
                 postDataParams.put("txtPassword",editTextPassword.getText().toString());
                 //스프링앱 주소를 지정
-                String requestUrl = "http://192.168.100.18:8080/android/login";
+                String requestUrl = "http://172.30.1.11:8080/android/login";
                 //jsp의 Ajax과 같은 역할의 AsyncTask클래스 사용
                 PostResponseAsyncTask readTask = new PostResponseAsyncTask(LoginActivity.this, postDataParams, new AsyncResponse() {
                     @Override
